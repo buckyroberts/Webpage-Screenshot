@@ -48,14 +48,14 @@ public class Main extends Application {
         try{
             URL oracle = new URL("https://raw.githubusercontent.com/buckyroberts/Webpage-Screenshot/master/sample-link.txt");
             BufferedReader in = new BufferedReader(new InputStreamReader(oracle.openStream()));
-            while((pageId = in.readLine()) != null && (url = in.readLine()) != null){
-                System.out.println(pageId);
-                System.out.println(url);
+            if((pageId = in.readLine()) != null && (url = in.readLine()) != null){
+                System.out.println("Page ID: " + pageId);
+                System.out.println("URL: " + url);
             }
             in.close();
         }catch (Exception e){
-            System.out.println("Error connecting to URL");
-
+            System.out.println("Error connecting to URL, exiting...");
+            System.exit(0);
         }
     }
 
