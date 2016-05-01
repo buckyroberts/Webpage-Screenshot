@@ -20,6 +20,7 @@ import java.util.TimerTask;
 
 public class Main extends Application {
 
+    private String pageId, url;
     private Browser browser;
     private Timer timer = new java.util.Timer();
 
@@ -30,8 +31,9 @@ public class Main extends Application {
     @Override
     public void start(Stage window) {
         window.setTitle("Screenshot Capture");
-        browser = new Browser("https://thenewboston.com/");
 
+        readUrl();
+        browser = new Browser(url);
         monitorPageStatus();
 
         VBox layout = new VBox();
@@ -44,17 +46,17 @@ public class Main extends Application {
 
     private void readUrl() {
         try{
-            URL oracle = new URL("http://stock-data-api.com/robots.txt");
+            URL oracle = new URL("https://raw.githubusercontent.com/buckyroberts/Webpage-Screenshot/master/sample-link.txt");
             BufferedReader in = new BufferedReader(new InputStreamReader(oracle.openStream()));
-            String inputLine;
-            while ((inputLine = in.readLine()) != null){
-                System.out.println(inputLine);
+            while((pageId = in.readLine()) != null && (url = in.readLine()) != null){
+                System.out.println(pageId);
+                System.out.println(url);
             }
             in.close();
         }catch (Exception e){
             System.out.println("Error connecting to URL");
-        }
 
+        }
     }
 
     private void monitorPageStatus(){
@@ -79,7 +81,7 @@ public class Main extends Application {
             public void run() {
                 Platform.runLater(() -> {
                     WritableImage image = browser.snapshot(new SnapshotParameters(), null);
-                    File file = new File("screenshots/demo.png");
+                    File file = new File("screenshots/" + pageId + ".png");
                     try {
                         ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
                         System.out.println("Screenshot saved");
