@@ -27,10 +27,8 @@ public class Main extends Application {
     @Override
     public void start(Stage window) {
         window.setTitle("Screenshot Capture");
-
         browser = new Browser("https://thenewboston.com/");
         monitorPageStatus();
-
         VBox layout = new VBox();
         layout.getChildren().addAll(browser);
         Scene scene = new Scene(layout);
@@ -60,7 +58,7 @@ public class Main extends Application {
             public void run() {
                 Platform.runLater(() -> {
                     WritableImage image = browser.snapshot(new SnapshotParameters(), null);
-                    File file = new File("screenshots/sample.png");
+                    File file = new File("screenshots/demo.png");
                     try {
                         ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
                         System.out.println("Screenshot saved");
@@ -75,4 +73,3 @@ public class Main extends Application {
     }
 
 }
-
