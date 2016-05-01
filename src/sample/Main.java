@@ -81,7 +81,7 @@ public class Main extends Application {
             public void run() {
                 Platform.runLater(() -> {
                     WritableImage image = browser.snapshot(new SnapshotParameters(), null);
-                    File file = new File("screenshots/" + pageId + ".png");
+                    File file = new File("images/" + pageId + ".png");
                     try {
                         ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
                         System.out.println("Screenshot saved");
