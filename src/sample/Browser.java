@@ -15,6 +15,10 @@ class Browser extends Region {
         getChildren().add(browser);
     }
 
+    Boolean isPageLoaded(){
+        return browser.getEngine().getDocument() != null;
+    }
+
     @Override
     protected void layoutChildren() {
         double w = getWidth();
