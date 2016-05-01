@@ -54,7 +54,7 @@ public class Main extends Application {
             }
             in.close();
         }catch (Exception e){
-            System.out.println("Error connecting to URL, exiting...");
+            e.printStackTrace();
             System.exit(0);
         }
     }
@@ -87,7 +87,8 @@ public class Main extends Application {
                         System.out.println("Screenshot saved");
                         System.exit(0);
                     } catch (IOException e) {
-                        System.out.println("Error taking screenshot");
+                        e.printStackTrace();
+                        System.exit(0);
                     }
                     cancel();
                 });
