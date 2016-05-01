@@ -2,15 +2,21 @@ package sample;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+
 import javax.imageio.ImageIO;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -28,12 +34,33 @@ public class Main extends Application {
     public void start(Stage window) {
         window.setTitle("Screenshot Capture");
         browser = new Browser("https://thenewboston.com/");
-        monitorPageStatus();
+
+        // monitorPageStatus();
+        readUrl();
+
         VBox layout = new VBox();
         layout.getChildren().addAll(browser);
         Scene scene = new Scene(layout);
         window.setScene(scene);
+        window.setOnCloseRequest(we -> System.exit(0));
         window.show();
+    }
+
+    private void readUrl() {
+        try{
+            URL oracle = new URL("http://stock-data-api.com/robots.txt");
+            BufferedReader in = new BufferedReader(new InputStreamReader(oracle.openStream()));
+            String inputLine;
+            int i = 0;
+            while ((inputLine = in.readLine()) != null){
+                System.out.println(i++);
+                System.out.println(inputLine);
+            }
+            in.close();
+        }catch (Exception e){
+            System.out.println("Error connecting to URL");
+        }
+
     }
 
     private void monitorPageStatus(){
@@ -64,7 +91,7 @@ public class Main extends Application {
                         System.out.println("Screenshot saved");
                         System.exit(0);
                     } catch (IOException e) {
-                        System.out.println("Crap");
+                        System.out.println("Error taking screenshot");
                     }
                     cancel();
                 });
