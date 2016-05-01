@@ -2,15 +2,12 @@ package sample;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
-
 import javax.imageio.ImageIO;
 import java.io.BufferedReader;
 import java.io.File;
@@ -35,8 +32,7 @@ public class Main extends Application {
         window.setTitle("Screenshot Capture");
         browser = new Browser("https://thenewboston.com/");
 
-        // monitorPageStatus();
-        readUrl();
+        monitorPageStatus();
 
         VBox layout = new VBox();
         layout.getChildren().addAll(browser);
@@ -51,9 +47,7 @@ public class Main extends Application {
             URL oracle = new URL("http://stock-data-api.com/robots.txt");
             BufferedReader in = new BufferedReader(new InputStreamReader(oracle.openStream()));
             String inputLine;
-            int i = 0;
             while ((inputLine = in.readLine()) != null){
-                System.out.println(i++);
                 System.out.println(inputLine);
             }
             in.close();

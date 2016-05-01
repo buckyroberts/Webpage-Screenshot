@@ -1,5 +1,0 @@
-http://stock-data-api.com/
-https://thenewboston.com/
-https://github.com/buckyroberts
-http://www.amazon.com/
-https://www.reddit.com/
