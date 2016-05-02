@@ -9,30 +9,29 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.Timer;
 import java.util.TimerTask;
 
 
 public class Main extends Application {
 
-    private String pageId, url;
+    private static String imageName, url;
     private Browser browser;
     private Timer timer = new java.util.Timer();
 
     public static void main(String[] args){
+        imageName = args[0];
+        url = args[1];
+        System.out.println("Creating screenshot for " + url);
         launch(args);
     }
 
     @Override
     public void start(Stage window) {
-        window.setTitle("Screenshot Capture");
+        window.setTitle(url);
 
-        readUrl();
         browser = new Browser(url);
         monitorPageStatus();
 
@@ -44,32 +43,17 @@ public class Main extends Application {
         window.show();
     }
 
-    private void readUrl() {
-        try{
-            URL oracle = new URL("https://raw.githubusercontent.com/buckyroberts/Webpage-Screenshot/master/sample-link.txt");
-            BufferedReader in = new BufferedReader(new InputStreamReader(oracle.openStream()));
-            if((pageId = in.readLine()) != null && (url = in.readLine()) != null){
-                System.out.println("Page ID: " + pageId);
-                System.out.println("URL: " + url);
-            }
-            in.close();
-        }catch (Exception e){
-            e.printStackTrace();
-            System.exit(0);
-        }
-    }
-
     private void monitorPageStatus(){
         timer.schedule(new TimerTask() {
             public void run() {
                 Platform.runLater(() -> {
                     if(browser.isPageLoaded()){
-                        System.out.println("Page is now loaded");
+                        System.out.println("Page now loaded, taking screenshot...");
                         saveAsPng();
                         cancel();
                     }
                     else
-                        System.out.println("Page not loaded...");
+                        System.out.println("Loading page...");
                 });
             }
         }, 1000, 1000);
@@ -81,10 +65,10 @@ public class Main extends Application {
             public void run() {
                 Platform.runLater(() -> {
                     WritableImage image = browser.snapshot(new SnapshotParameters(), null);
-                    File file = new File("images/" + pageId + ".png");
+                    File file = new File("images/" + imageName + ".png");
                     try {
                         ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
-                        System.out.println("Screenshot saved");
+                        System.out.println("Screenshot saved as " + imageName + ".png");
                         System.exit(0);
                     } catch (IOException e) {
                         e.printStackTrace();
