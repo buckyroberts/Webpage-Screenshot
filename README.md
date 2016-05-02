@@ -1,8 +1,8 @@
-![](http://i.imgur.com/GzLM9rI.jpg)
+![](http://i.imgur.com/94hDwLg.jpg)
 
 # Overview
 
-Website Screenshot is a JavaFX program that lets you to enter the URL of a webpage and it will take a screenshot and
+Webpage Screenshot is a JavaFX program that lets you to enter the URL of a webpage and it will take a screenshot and
 save it as a .png image.
 
 ## To build a .jar file
