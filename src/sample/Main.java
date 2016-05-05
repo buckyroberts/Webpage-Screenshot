@@ -24,6 +24,7 @@ public class Main extends Application {
     public static void main(String[] args){
         imageName = args[0];
         url = args[1];
+        System.setProperty("jsse.enableSNIExtension", "false");
         System.out.println("Creating screenshot for " + url);
         launch(args);
     }
